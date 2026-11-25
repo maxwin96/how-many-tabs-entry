@@ -13,5 +13,12 @@ import { mkdirSync, writeFileSync } from "node:fs";
 
 const TAB_COUNT = "87";
 
+// The competition gate expects a plain digit count (1–5 digits), so
+// refuse anything that is not exactly that before writing — a stray
+// space, sign or decimal would make the entry invalid.
+if (!/^\d{1,5}$/.test(TAB_COUNT)) {
+  throw new Error(`TAB_COUNT must be 1–5 digits, got: ${JSON.stringify(TAB_COUNT)}`);
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", TAB_COUNT);
